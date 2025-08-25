@@ -23,7 +23,7 @@ response_schemas = [
     ),
     ResponseSchema(
         name="categoria",
-        description="Categoría: insulto, acoso, amenaza, discriminación, burla, etc. Si no aplica, 'N/A'."
+        description="Categoría: género, edad, religión, raza, u otro tipo. Si no aplica, 'N/A'."
     ),
     ResponseSchema(
         name="justificacion",
