@@ -27,7 +27,6 @@ s3 = boto3.client(
 )
 
 import pandas as pd
-import boto3
 
 # --- Configuración de S3 ---
 # El URI que me proporcionaste
@@ -385,7 +384,7 @@ Vamos a dividir el proceso en cuatro pasos claros: dividir los datos, entrenar e
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, ConfusionMatrixDisplay
+from sklearn.metrics import classification_report, ConfusionMatrixDisplay, accuracy_score
 import matplotlib.pyplot as plt
 
 """### Paso 1: Dividir los Datos en Entrenamiento y Prueba"""
@@ -402,34 +401,51 @@ print("Datos divididos con éxito:")
 print(f"Forma de X_train (entrenamiento): {X_train.shape}")
 print(f"Forma de X_test (prueba): {X_test.shape}")
 
-"""### Paso 2: Entrenar un Modelo de Regresión Logística"""
+"""### Paso 2: Entrenar y Evaluar un Modelo de Regresión Logística"""
 
-# Inicializamos el modelo. Aumentamos max_iter para asegurar que el modelo converja.
-model = LogisticRegression(max_iter=1000, random_state=42)
+!pip install mlflow
 
-# Entrenamos el modelo usando nuestros datos de entrenamiento
-print("\nEntrenando el modelo de Regresión Logística...")
-model.fit(X_train, y_train)
-print("¡Modelo entrenado!")
+import mlflow
+import mlflow.sklearn
 
-"""### Paso 3: Realizar Predicciones"""
+# defina el servidor para llevar el registro de modelos y artefactos
+mlflow.set_tracking_uri('http://localhost:5000')
+# registre el experimento
+experiment = mlflow.set_experiment("/cyberbulling-classification")
 
-# El modelo predice las etiquetas para el conjunto de prueba (X_test)
-y_pred = model.predict(X_test)
+with mlflow.start_run(experiment_id=experiment.experiment_id):
+  # Inicializamos el modelo. Aumentamos max_iter para asegurar que el modelo converja.
+  model = LogisticRegression(max_iter=1000, random_state=42)
 
-print("\nPredicciones realizadas en el conjunto de prueba.")
+  # Entrenamos el modelo usando nuestros datos de entrenamiento
+  print("\nEntrenando el modelo de Regresión Logística...")
+  model.fit(X_train, y_train)
+  print("¡Modelo entrenado!")
 
-"""### Paso 4: Evaluar el Rendimiento del Modelo"""
+  # El modelo predice las etiquetas para el conjunto de prueba (X_test)
+  y_pred = model.predict(X_test)
 
-# 1. Imprimir el Reporte de Clasificación
-print("\n--- Reporte de Clasificación ---")
-print(classification_report(y_test, y_pred))
+  print("\nPredicciones realizadas en el conjunto de prueba.")
+
+  # Registre el modelo
+  mlflow.sklearn.log_model(model, "logistic-regression")
+
+  # 1. Imprimir el Reporte de Clasificación
+  print("\n--- Reporte de Clasificación ---")
+  print(classification_report(y_test, y_pred))
 
 
-# 2. Visualizar la Matriz de Confusión
-print("\n--- Matriz de Confusión ---")
-# Esta función dibuja la matriz por nosotros, haciendo fácil la interpretación
-fig, ax = plt.subplots(figsize=(8, 8))
-ConfusionMatrixDisplay.from_estimator(model, X_test, y_test, xticks_rotation='vertical', ax=ax)
-plt.title("Matriz de Confusión")
-plt.show()
+  # 2. Visualizar la Matriz de Confusión
+  print("\n--- Matriz de Confusión ---")
+  # Esta función dibuja la matriz por nosotros, haciendo fácil la interpretación
+  fig, ax = plt.subplots(figsize=(8, 8))
+  ConfusionMatrixDisplay.from_estimator(model, X_test, y_test, xticks_rotation='vertical', ax=ax)
+  plt.title("Matriz de Confusión")
+  plt.show()
+
+  # 3. Calculo de accuracy
+  accuracy = accuracy_score(y_test, y_pred)
+  print(f"\nAccuracy: {accuracy}")
+
+  # Cree y registre la métrica de interés
+  mlflow.log_metric("accuracy", accuracy)
