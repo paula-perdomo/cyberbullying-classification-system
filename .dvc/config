@@ -2,5 +2,5 @@
     remote = aws-remote
 ['remote "aws-remote"']
     url = s3://s3-cyberbullying-classification-data
-    access_key_id = AKIAVFSC4ENBY4YQ3MPI
-    secret_access_key = 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
+    access_key_id = 
+    secret_access_key = 
