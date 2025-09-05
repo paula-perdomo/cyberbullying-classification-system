@@ -1,6 +1,6 @@
 # Cyberbullying Classification System
 ## Universidad de Los Andes (uniandes.edu.co)
-## Intergantes: Christian Palma, Gina Paola Ríos Rueda, Alberto Echeverria Zubiria, Paula Perdomo
+## Integrantes: Christian Palma, Gina Paola Ríos Rueda, Alberto Echeverria Zubiria, Paula Perdomo
 
 La proliferación de la comunicación digital ha provocado un aumento significativo del ciberacoso, lo que representa una
 grave amenaza para el bienestar de los usuarios en línea. Este proyecto, el "Sistema de Clasificación de Ciberacoso"
@@ -19,7 +19,7 @@ proyecto sirve como una demostración práctica del aprovechamiento del aprendiz
 eficazmente la toxicidad en línea.
 
 
-#[Revisión del estado del arte](EDA.ipynb)
+#[Análisis exploratorio de los datos](EDA.ipynb)
 
 ### Fecha de inicio: 08-04-2025
 ### Fecha de fin: 09-27-2025
