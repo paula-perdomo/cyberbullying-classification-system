@@ -59,6 +59,12 @@ with col1:
 with col2:
     st.title("Detección de Cyberbullying")
 
+st.sidebar.title("Estadísticas de Cyberbullying")
+st.sidebar.image("cyberbullying_graph.png", use_container_width=True)
+st.sidebar.markdown(""" 
+El gráfico muestra el porcentaje de personas víctimas de cyberacoso por red social. Es importante que tu aplicación detecte a tiempo contenido violento. Entrenamos modelos con datos reales y una alta sensibilidad, que ahora están a tu servicio.
+""")
+
 st.markdown("""
 La proliferación de la comunicación digital ha provocado un aumento significativo del ciberacoso, lo que representa una grave amenaza para el bienestar de los usuarios en línea.  
 El **73% de usuarios de X (antes Twitter)** reportó haber sido víctima de ciberacoso, haciendo de esta plataforma la más hostil.  

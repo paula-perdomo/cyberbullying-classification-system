@@ -1,6 +1,8 @@
 [core]
-    remote = aws-remote
+    remote = storage
 ['remote "aws-remote"']
     url = s3://s3-cyberbullying-classification-data
-    access_key_id = 
-    secret_access_key = 
+    access_key_id = ""
+    secret_access_key = ""
+['remote "storage"']
+    url = s3://s3-cyberbullying-classification-data
